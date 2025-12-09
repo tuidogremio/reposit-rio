@@ -4,11 +4,19 @@
     require "../Controller/Action_SQL.php";
     require "../Model/Livros.php";
 
+    //Recebe o id e coloca em variavel
+    $id_recebido = $_GET['id'];
+
+    //Instrução de selecionar com id
+    $nova_selecao = new Action_SQL;
+    $requisicao = $nova_selecao->selecionar_id($id_recebido);
+    $resultado = $requisicao->fetch(PDO::FETCH_ASSOC);
+
     //Instrução de inserir
-    $novo_livro = new Livros;
+    $novo_livro_editado = new Livros;
 
     //Recebe as informações
-    if(isset($_POST['inserir'])){
+    if(isset($_POST['editar'])){
 
         $nome_livro = $_POST['nome_livro'];
         $descricao = $_POST['descricao'];
@@ -38,11 +46,11 @@
         }
 
         //Chama as funções de armazenamento temporario
-        $novo_livro->setNome_Livro($nome_livro);
-        $novo_livro->setDescricao($descricao);
-        $novo_livro->setClassificacao($classificacao);
-        $novo_livro->setGenero($genero);
-        $novo_livro->setReferencias($referencias);
+        $novo_livro_editado->setNome_Livro($nome_livro);
+        $novo_livro_editado->setDescricao($descricao);
+        $novo_livro_editado->setClassificacao($classificacao);
+        $novo_livro_editado->setGenero($genero);
+        $novo_livro_editado->setReferencias($referencias);
     }
     
 
@@ -58,7 +66,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Home</title>
+    <title>Editar</title>
   </head>
   <body>
 
@@ -66,56 +74,47 @@
 
     <div class="container">
 
-        <?php require "../Includes/topo.php"; ?>
-
         <div class="row">
             <div class="col-md-12">
-                <h1 style="text-align: center; margin-bottom: 3%;">Cadastro de Livros</h1>
+                <h1 style="text-align: center; margin-bottom: 3%;">Editar Livros</h1>
             </div>
         </div>
         <form method="post">
             <div class="row justify-content-center" style="margin-bottom: 3%;">
                 <div class="col-md-6">
-                    <label>Nome do Livro</label>
-                    <input type="text" class="form-control" name="nome_livro">
+                    <label>Nome do Livro (Edição)</label>
+                    <input type="text" class="form-control" name="nome_livro"
+                    value="<?=htmlspecialchars($resultado['nome_livro'])?>">
                 </div>
                 <div class="col-md-6">
-                    <label>Descrição</label>
-                    <input type="text" class="form-control" name="descricao">
+                    <label>Descrição (Edição)</label>
+                    <input type="text" class="form-control" name="descricao" value="<?=htmlspecialchars($resultado['descricao'])?>">
                 </div>
             </div>
             <div class="row justify-content-center" style="margin-bottom: 3%;">
                 <div class="col-md-4">
-                    <label>Genero</label>
-                    <input type="text" class="form-control" name="genero">
+                    <label>Genero (Edição)</label>
+                    <input type="text" class="form-control" name="genero"
+                    value="<?=htmlspecialchars($resultado['genero'])?>">
                 </div>
                 <div class="col-md-4">
-                    <label>Classificação</label>
-                    <input type="text" class="form-control" name="classificacao">
+                    <label>Classificação (Edição)</label>
+                    <input type="text" class="form-control" name="classificacao"
+                    value="<?=htmlspecialchars($resultado['classificacao'])?>">
                 </div>
                 <div class="col-md-4">
-                    <label>Referencias</label>
-                    <input type="text" class="form-control" name="referencias">
+                    <label>Referencias (Edição)</label>
+                    <input type="text" class="form-control" name="referencias"
+                    value="<?=htmlspecialchars($resultado['referencias'])?>">
                 </div>
             </div>
             <div class="row justify-content-center" style="margin-bottom: 3%;">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary"style="width: 100%" name="inserir">Cadastrar</button>
+                    <button type="submit" class="btn btn-primary"style="width: 100%" name="editar">Editar livro</button>
                 </div>
             </div>
         </form>
     </div>
-
-
-
-
-
-
-
-
-
-
-
 
     <!-- JavaScript (Opcional) -->
     <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
@@ -128,20 +127,21 @@
 <?php
 
     //Usa as funções do model para inserir no banco
-    if($novo_livro->getNome_Livro() != "" &&
-       $novo_livro->getDescricao() != "" &&
-       $novo_livro->getClassificacao() != "" &&
-       $novo_livro->getGenero() != "" &&
-       $novo_livro->getReferencias() != ""){
+    if($novo_livro_editado->getNome_Livro() != "" &&
+       $novo_livro_editado->getDescricao() != "" &&
+       $novo_livro_editado->getClassificacao() != "" &&
+       $novo_livro_editado->getGenero() != "" &&
+       $novo_livro_editado->getReferencias() != ""){
 
         //Chama a função para inserir no banco
-        $nova_insercao = new Action_SQL;
-        $nova_insercao->inserir(
-            $novo_livro->getNome_Livro(),
-            $novo_livro->getDescricao(),
-            $novo_livro->getClassificacao(),
-            $novo_livro->getGenero(),
-            $novo_livro->getReferencias());
+        $nova_edicao = new Action_SQL;
+        $nova_edicao->editar(
+            $id_recebido,
+            $novo_livro_editado->getNome_Livro(),
+            $novo_livro_editado->getDescricao(),
+            $novo_livro_editado->getClassificacao(),
+            $novo_livro_editado->getGenero(),
+            $novo_livro_editado->getReferencias());
        }
 
 ?>

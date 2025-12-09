@@ -1,15 +1,24 @@
-<?php 
+<?php
 
-  require_once "../Conexao/conexao.php";
-  require "../Controller/Action_SQL.php";
+    require_once "../Conexao/conexao.php";
+    require "../Controller/Action_SQL.php";
 
-  $nova_selecao = new Action_SQL;
-  $requisicao = $nova_selecao->selecionar();
 
+    //Selecionar
+    $nova_selecao = new Action_SQL;
+    $requisicao = $nova_selecao->selecionar();
+
+    //Excluir
+    $nova_exclusao = new Action_SQL;
+    if(isset($_POST['excluir'])){
+
+      $id = $_POST['excluir'];
+
+      $nova_exclusao->deletar($id);
+
+    }
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -32,7 +41,7 @@
         <?php require "../Includes/topo.php"; ?>
         
         <h1 style="margin-top: 5%; margin-bottom: 5%; text-align: center;">Bem vindo</h1>
-       
+
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -56,8 +65,18 @@
                     <td><?= $row['genero']; ?></td>
                     <td><?= $row['referencias']; ?></td>
                     <td>
-                      <a href="../View/editar.php?id=<?= $row['id'];?>" class="btn btn-secondary">Editar</a>
-                      <a href="../View/deletar.php?id=<?= $row['id'];?>" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja deletar?')">Deletar</a>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <a href="../View/editar.php?id=<?= $row['id'];?>" class="btn btn-secondary">Editar</a>
+                        </div>
+
+                        <div class="col-md-4">
+                          <form method="post">
+                            <button value="<?= $row['id'];?>" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja deletar?')" name="excluir">Deletar</button>
+                          </form>
+                        </div>
+                      </div>
+                      
                     </td>  
                     </tr>
                 <!--//Termina o while aqui-->    
@@ -66,6 +85,17 @@
             
         </table>
     </div>
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- JavaScript (Opcional) -->
     <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
