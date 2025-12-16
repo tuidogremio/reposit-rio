@@ -7,35 +7,7 @@
     //Instrução de inserir
     $novo_livro = new Livros;
 
-    //Recebe as informações
-    if(isset($_POST['inserir'])){
-
-        $nome_livro = $_POST['nome_livro'];
-        $descricao = $_POST['descricao'];
-        $classificacao = $_POST['classificacao'];
-        $genero = $_POST['genero'];
-        $referencias = $_POST['referencias'];
-
-        if(empty(trim($nome_livro))){
-            echo "<script> alert('Campo Nome do livro em branco');window.location.href='../View/cadastrar.php'; </script>"; 
-            exit;
-        }
-        if(empty(trim($descricao))){
-            echo "<script> alert('Campo descrição em branco');window.location.href='../View/cadastrar.php'; </script>";
-            exit; 
-        }
-        if(empty(trim($classificacao))){
-            echo "<script> alert('Campo classificação em branco');window.location.href='../View/cadastrar.php'; </script>"; 
-            exit;
-        }
-        if(empty(trim($genero))){
-            echo "<script> alert('Campo genero em branco');window.location.href='../View/cadastrar.php'; </script>";
-            exit; 
-        }
-        if(empty(trim($referencias))){
-            echo "<script> alert('Campo referencias em branco');window.location.href='../View/cadastrar.php'; </script>";
-            exit; 
-        }
+    
 
         //Chama as funções de armazenamento temporario
         $novo_livro->setNome_Livro($nome_livro);
@@ -43,7 +15,7 @@
         $novo_livro->setClassificacao($classificacao);
         $novo_livro->setGenero($genero);
         $novo_livro->setReferencias($referencias);
-    }
+    
     
 
 ?>
