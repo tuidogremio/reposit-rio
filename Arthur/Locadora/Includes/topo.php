@@ -1,0 +1,24 @@
+<ul class="nav nav-tabs justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="../View/home.php">HOME</a>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="" role="button" aria-expanded="false">Extra</a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="">Action</a></li>
+      <li><a class="dropdown-item" href="">Another action</a></li>
+      <li><a class="dropdown-item" href="">Something else here</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="">Separated link</a></li>
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../View/cadastrar_filme.php">Cadastrar Filme</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../View/cadastrar_usuario.php">Cadastrar Usuário</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../View/sair.php">Sair</a>
+  </li>
+</ul>
