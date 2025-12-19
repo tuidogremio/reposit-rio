@@ -1,7 +1,17 @@
 <?php
 
+session_start();
+if($_SESSION['logado'] != TRUE){
+ echo "<script> alert('Por favor faça o login');window.location.href='../index.php'; </script>"; 
+
+
+}
+
+?>
+<?php
+
     require_once "../Conexao/conexao.php";
-    require "../Controller/Action_SQL.php";
+    require "../Controller/Action_SQL_filme.php";
     require "../Model/Filmes.php";
 
     //Instrução de inserir
@@ -11,9 +21,6 @@
     if(isset($_POST['inserir'])){
 
         $filme = $_POST['filme'];
-        $descricao = $_POST['descricao'];
-        $alugado = $_POST['alugado'];
-        $quem_alugou = $_POST['quem_alugou'];
         $ano = $_POST['ano'];
         $genero = $_POST['genero'];
         $classificacao = $_POST['classificacao'];
@@ -24,18 +31,6 @@
         if(empty(trim($filme))){
             echo "<script> alert('Campo Nome do Filme em branco');window.location.href='../View/cadastrar.php'; </script>"; 
             exit;
-        }
-        if(empty(trim($descricao))){
-            echo "<script> alert('Campo Descrição em branco');window.location.href='../View/cadastrar.php'; </script>";
-            exit; 
-        }
-        if(empty(trim($alugado))){
-            echo "<script> alert('Campo Alugado em branco');window.location.href='../View/cadastrar.php'; </script>"; 
-            exit;
-        }
-        if(empty(trim($quem_alugou))){
-            echo "<script> alert('Campo Quem Alugou em branco');window.location.href='../View/cadastrar.php'; </script>";
-            exit; 
         }
         if(empty(trim($ano))){
             echo "<script> alert('Campo Ano em branco');window.location.href='../View/cadastrar.php'; </script>";
@@ -64,9 +59,6 @@
 
         //Chama as funções de armazenamento temporario
         $novo_filme->setFilme($filme);
-        $novo_filme->setDescricao($descricao);
-        $novo_filme->setAlugado($alugado);
-        $novo_filme->setQuem_alugou($quem_alugou);
         $novo_filme->setAno($ano);
         $novo_filme->setGenero($genero);
         $novo_filme->setClassificacao($classificacao);
@@ -105,39 +97,25 @@
         </div>
         <form method="post">
             <div class="row justify-content-center" style="margin-bottom: 2%;">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <label>Nome do Filme</label>
                     <input type="text" class="form-control" name="filme">
                 </div>
-                <div class="col-md-6">
-                    <label>Descrição</label>
-                    <input type="text" class="form-control" name="descricao">
-                </div>
-            </div>
-            <div class="row justify-content-center" style="margin-bottom: 2%;">
-                <div class="col-md-4">
-                    <label>Alugado</label>
-                    <input type="text" class="form-control" name="alugado">
-                </div>
-                <div class="col-md-4">
-                    <label>Quem Alugou</label>
-                    <input type="text" class="form-control" name="quem_alugou">
-                </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <label>Ano</label>
                     <input type="text" class="form-control" name="ano">
                 </div>
-            </div>
-            <div class="row justify-content-center" style="margin-bottom: 2%;">
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <label>Genero</label>
                     <input type="text" class="form-control" name="genero">
                 </div>
-                <div class="col-md-4">
+            </div>
+            <div class="row justify-content-center" style="margin-bottom: 2%;">
+                <div class="col-md-6">
                     <label>Classificação</label>
                     <input type="text" class="form-control" name="classificacao">
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label>Diretor</label>
                     <input type="text" class="form-control" name="diretor">
                 </div>
@@ -160,17 +138,6 @@
         </form>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
     <!-- JavaScript (Opcional) -->
     <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -183,9 +150,6 @@
 
     //Usa as funções do model para inserir no banco
     if($novo_filme->getFilme() != "" &&
-       $novo_filme->getDescricao() != "" &&
-       $novo_filme->getAlugado() != "" &&
-       $novo_filme->getQuem_alugou() != "" &&
        $novo_filme->getAno() != "" &&
        $novo_filme->getGenero() != "" &&
        $novo_filme->getClassificacao() != "" &&
@@ -194,12 +158,9 @@
        $novo_filme->getStatus() != "" ){
 
         //Chama a função para inserir no banco
-        $nova_insercao = new Action_SQL;
+        $nova_insercao = new Action_SQL_filme;
         $nova_insercao->inserir(
             $novo_filme->getFilme(),
-            $novo_filme->getDescricao(),
-            $novo_filme->getAlugado(),
-            $novo_filme->getQuem_alugou(),
             $novo_filme->getAno(),
             $novo_filme->getGenero(),
             $novo_filme->getClassificacao(),

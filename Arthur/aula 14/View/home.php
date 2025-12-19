@@ -1,5 +1,19 @@
 <?php
 
+session_start();
+if($_SESSION['logado'] != TRUE){
+ echo "<script> alert('Por favor faça o login');window.location.href='../index.php'; </script>"; 
+
+
+}
+
+
+
+
+?>
+
+<?php
+
     require_once "../Conexao/conexao.php";
     require "../Controller/Action_SQL.php";
 

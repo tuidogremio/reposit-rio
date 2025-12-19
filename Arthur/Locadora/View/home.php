@@ -7,23 +7,21 @@ if($_SESSION['logado'] != TRUE){
 
 }
 
-
-
-
 ?>
 
 <?php
 
     require_once "../Conexao/conexao.php";
+    require "../Controller/Action_SQL_filme.php";
     require "../Controller/Action_SQL.php";
 
 
     //Selecionar
-    $nova_selecao = new Action_SQL;
+    $nova_selecao = new Action_SQL_filme;
     $requisicao = $nova_selecao->selecionar();
 
     //Excluir
-    $nova_exclusao = new Action_SQL;
+    $nova_exclusao = new Action_SQL_filme;
     if(isset($_POST['excluir'])){
 
       $id = $_POST['excluir'];
@@ -60,10 +58,10 @@ if($_SESSION['logado'] != TRUE){
             <thead>
                 <tr>
                 <th scope="col">ID</th>
-                <th scope="col">NOME DO LIVRO</th>
-                <th scope="col">CLASSIFICAÇÃO</th>
-                <th scope="col">GÊNERO</th>
-                <th scope="col">REFERENCIAS</th>
+                <th scope="col">NOME DO FILME</th>
+                <th scope="col">DESCRIÇÃO</th>
+                <th scope="col">STATUS</th>
+                <th scope="col">DIRETOR</th>
                 </tr>
             </thead>
             
@@ -74,14 +72,14 @@ if($_SESSION['logado'] != TRUE){
                     <!--Imprime cada informação do banco-->
                     <!--th = negrito e td = normal-->
                     <th><?= $row['id']; ?></th>
-                    <td><?= $row['nome_livro']; ?></td>
-                    <td><?= $row['classificacao']; ?></td>
-                    <td><?= $row['genero']; ?></td>
-                    <td><?= $row['referencias']; ?></td>
+                    <td><?= $row['filme']; ?></td>
+                    <td><?= $row['sinopse']; ?></td>
+                    <td><?= $row['status']; ?></td>
+                    <td><?= $row['diretor']; ?></td>
                     <td>
                       <div class="row">
                         <div class="col-md-4">
-                          <a href="../View/editar.php?id=<?= $row['id'];?>" class="btn btn-secondary">Editar</a>
+                          <a href="../View/editar_filme.php?id=<?= $row['id'];?>" class="btn btn-secondary">Editar</a>
                         </div>
 
                         <div class="col-md-4">
@@ -99,17 +97,6 @@ if($_SESSION['logado'] != TRUE){
             
         </table>
     </div>
-
-
-
-
-
-
-
-
-
-
-
 
     <!-- JavaScript (Opcional) -->
     <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->

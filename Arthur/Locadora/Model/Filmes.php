@@ -3,9 +3,6 @@
     class Filmes{
 
         private $filme;
-        private $descricao;
-        private $alugado;
-        private $quem_alugou;
         private $ano;
         private $genero;
         private $classificacao;
@@ -26,44 +23,6 @@
             return $this;
         } 
 
-        //Função para conseguir 020acessar a variavel privada
-        public function getDescricao(){
-            //Retorna o valor da variavel
-            return $this->nome_descricao;
-        }
-        //Função para colocar valor na variavel privada
-        public function setDescricao($nome_descricao) : self{
-            //Chama a variavel e iguala ela ao parametro recebido
-            $this->nome_descricao = $nome_descricao;
-            //Retorna o valor para ser adicionado pelo private
-            return $this;
-        } 
-
-        //Função para conseguir acessar a variavel privada
-        public function getAlugado(){
-            //Retorna o valor da variavel
-            return $this->nome_alugado;
-        }
-        //Função para colocar valor na variavel privada
-        public function setAlugado($nome_alugado) : self{
-            //Chama a variavel e iguala ela ao parametro recebido
-            $this->nome_alugado = $nome_alugado;
-            //Retorna o valor para ser adicionado pelo private
-            return $this;
-        } 
-
-        //Função para conseguir acessar a variavel privada
-        public function getQuem_alugou(){
-            //Retorna o valor da variavel
-            return $this->nome_quem_alugou;
-        }
-        //Função para colocar valor na variavel privada
-        public function setQuem_alugou($nome_quem_alugou) : self{
-            //Chama a variavel e iguala ela ao parametro recebido
-            $this->nome_quem_alugou = $nome_quem_alugou;
-            //Retorna o valor para ser adicionado pelo private
-            return $this;
-        } 
 
         //Função para conseguir acessar a variavel privada
         public function getAno(){

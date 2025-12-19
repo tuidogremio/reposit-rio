@@ -2,7 +2,7 @@
 
     require "../Conexao/conexao.php";
 
-    class Action_SQL{
+    class Action_SQL_filme{
 
         //Realiza a instrução de selecionar
         public function selecionar(){
@@ -56,9 +56,6 @@
         //Realiza a instrução de inserir
         public function inserir(
             $filme,
-            $descricao,
-            $alugado,
-            $quem_alugou,
             $ano,
             $genero,
             $classificacao,
@@ -67,11 +64,8 @@
             $status){
 
             require "../Conexao/conexao.php";
-            $stmt = $pdo->prepare("INSERT INTO filmes (filme, descricao, alugado, quem_alugou, ano, genero, classificacao, diretor, sinopse, status) VALUES (:filme, :descricao, :alugado, :quem_alugou, :ano, :genero, :classificacao, :diretor, :sinopse, :status)");
+            $stmt = $pdo->prepare("INSERT INTO filmes (filme, ano, genero, classificacao, diretor, sinopse, status) VALUES (:filme, :ano, :genero, :classificacao, :diretor, :sinopse, :status)");
             $stmt->bindParam(":filme", $filme);
-            $stmt->bindParam(":descricao", $descricao);
-            $stmt->bindParam(":alugado", $alugado);
-            $stmt->bindParam(":quem_alugou", $quem_alugou);
             $stmt->bindParam(":ano", $ano);
             $stmt->bindParam(":genero", $genero);
             $stmt->bindParam(":classificacao", $classificacao);
@@ -98,9 +92,6 @@
         public function editar(
             $id,
             $filme,
-            $descricao,
-            $alugado,
-            $quem_alugou,
             $ano,
             $genero,
             $classificacao,
@@ -113,12 +104,9 @@
 
                 //Instrução de editar
                 require "../Conexao/conexao.php";
-                $stmt = $pdo->prepare("UPDATE filmes SET filme = :filme, descricao = :descricao, alugado = :alugado, quem_alugou = :quem_alugou, ano = :ano, genero = :genero, classificacao = :classificacao, diretor = :diretor, sinopse = :sinopse, status = :status WHERE id = :id");
+                $stmt = $pdo->prepare("UPDATE filmes SET filme = :filme,  ano = :ano, genero = :genero, classificacao = :classificacao, diretor = :diretor, sinopse = :sinopse, status = :status WHERE id = :id");
                 $stmt->bindParam(":id", $id);
                 $stmt->bindParam(":filme", $filme);
-                $stmt->bindParam(":descricao", $descricao);
-                $stmt->bindParam(":alugado", $alugado);
-                $stmt->bindParam(":quem_alugou", $quem_alugou);
                 $stmt->bindParam(":ano", $ano);
                 $stmt->bindParam(":genero", $genero);
                 $stmt->bindParam(":classificacao", $classificacao);
@@ -168,7 +156,7 @@
 
                 }else{
 
-                    echo "<script> alert('Sucesso ao deletar o livro');window.location.href='../View/home.php'; </script>";
+                    echo "<script> alert('Sucesso ao deletar o filme');window.location.href='../View/home.php'; </script>";
 
                 }
 

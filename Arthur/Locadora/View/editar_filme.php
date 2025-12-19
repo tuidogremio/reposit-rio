@@ -1,27 +1,34 @@
 <?php
 
+session_start();
+if($_SESSION['logado'] != TRUE){
+ echo "<script> alert('Por favor faça o login');window.location.href='../index.php'; </script>"; 
+
+
+}
+
+?>
+<?php
+
     require_once "../Conexao/conexao.php";
-    require "../Controller/Action_SQL.php";
+    require "../Controller/Action_SQL_filme.php";
     require "../Model/Filmes.php";
 
     //Recebe o id e coloca em variavel
     $id_recebido = $_GET['id'];
 
     //Instrução de selecionar com id
-    $nova_selecao = new Action_SQL;
+    $nova_selecao = new Action_SQL_filme;
     $requisicao = $nova_selecao->selecionar_id($id_recebido);
     $resultado = $requisicao->fetch(PDO::FETCH_ASSOC);
 
     //Instrução de inserir
-    $novo_filme_editado = new Livros;
+    $novo_filme_editado = new Filmes;
 
     //Recebe as informações
     if(isset($_POST['editar'])){
 
         $filme = $_POST['filme'];
-        $descricao = $_POST['descricao'];
-        $alugado = $_POST['alugado'];
-        $quem_alugou = $_POST['quem_alugou'];
         $ano = $_POST['ano'];
         $genero = $_POST['genero'];
         $classificacao = $_POST['classificacao'];
@@ -32,18 +39,6 @@
         if(empty(trim($filme))){
             echo "<script> alert('Campo Nome do livro em branco');window.location.href='../View/cadastrar.php'; </script>"; 
             exit;
-        }
-        if(empty(trim($descricao))){
-            echo "<script> alert('Campo descrição em branco');window.location.href='../View/cadastrar.php'; </script>";
-            exit; 
-        }
-        if(empty(trim($alugado))){
-            echo "<script> alert('Campo Alugado em branco');window.location.href='../View/cadastrar.php'; </script>"; 
-            exit;
-        }
-        if(empty(trim($quem_alugou))){
-            echo "<script> alert('Campo Quem alugou em branco');window.location.href='../View/cadastrar.php'; </script>";
-            exit; 
         }
         if(empty(trim($ano))){
             echo "<script> alert('Campo Ano em branco');window.location.href='../View/cadastrar.php'; </script>";
@@ -72,9 +67,6 @@
 
         //Chama as funções de armazenamento temporario
         $novo_filme_editado->setFilme($filme);
-        $novo_filme_editado->setDescricao($descricao);
-        $novo_filme_editado->setAlugado($alugado);
-        $novo_filme_editado->setQuem_alugou($quem_alugou);
         $novo_filme_editado->setAno($ano);
         $novo_filme_editado->setGenero($genero);
         $novo_filme_editado->setClassificacao($classificacao);
@@ -104,43 +96,51 @@
 
     <div class="container">
 
+        <?php require "../Includes/topo.php"; ?>
+
         <div class="row">
             <div class="col-md-12">
-                <h1 style="text-align: center; margin-bottom: 3%;">Editar Livros</h1>
+                <h1 style="text-align: center; margin-bottom: 2%;">Editar Filme</h1>
             </div>
         </div>
         <form method="post">
-            <div class="row justify-content-center" style="margin-bottom: 3%;">
-                <div class="col-md-6">
-                    <label>Nome do Livro (Edição)</label>
-                    <input type="text" class="form-control" name="filme"
-                    value="<?=htmlspecialchars($resultado['filme'])?>">
+            <div class="row justify-content-center" style="margin-bottom: 2%;">
+                <div class="col-md-5">
+                    <label>Nome do Filme</label>
+                    <input type="text" class="form-control" name="filme" value="<?=htmlspecialchars($resultado['filme'])?>">
                 </div>
-                <div class="col-md-6">
-                    <label>Descrição (Edição)</label>
-                    <input type="text" class="form-control" name="descricao" value="<?=htmlspecialchars($resultado['descricao'])?>">
+                <div class="col-md-2">
+                    <label>Ano</label>
+                    <input type="text" class="form-control" name="ano" value="<?=htmlspecialchars($resultado['ano'])?>">
                 </div>
-            </div>
-            <div class="row justify-content-center" style="margin-bottom: 3%;">
-                <div class="col-md-4">
-                    <label>quem_alugou (Edição)</label>
-                    <input type="text" class="form-control" name="quem_alugou"
-                    value="<?=htmlspecialchars($resultado['quem_alugou'])?>">
-                </div>
-                <div class="col-md-4">
-                    <label>Classificação (Edição)</label>
-                    <input type="text" class="form-control" name="alugado"
-                    value="<?=htmlspecialchars($resultado['alugado'])?>">
-                </div>
-                <div class="col-md-4">
-                    <label>ano (Edição)</label>
-                    <input type="text" class="form-control" name="ano"
-                    value="<?=htmlspecialchars($resultado['ano'])?>">
+                <div class="col-md-5">
+                    <label>Genero</label>
+                    <input type="text" class="form-control" name="genero" value="<?=htmlspecialchars($resultado['genero'])?>">
                 </div>
             </div>
-            <div class="row justify-content-center" style="margin-bottom: 3%;">
+            <div class="row justify-content-center" style="margin-bottom: 2%;">
+                <div class="col-md-6">
+                    <label>Classificação</label>
+                    <input type="text" class="form-control" name="classificacao" value="<?=htmlspecialchars($resultado['classificacao'])?>">
+                </div>
+                <div class="col-md-6">
+                    <label>Diretor</label>
+                    <input type="text" class="form-control" name="diretor" value="<?=htmlspecialchars($resultado['diretor'])?>">
+                </div>
+            </div>
+            <div class="row justify-content-center" style="margin-bottom: 2%;">
+                <div class="col-md-6">
+                    <label>Sinopse</label>
+                    <input type="text" class="form-control" name="sinopse" value="<?=htmlspecialchars($resultado['sinopse'])?>">
+                </div>
+                <div class="col-md-6">
+                    <label>Status</label>
+                    <input type="text" class="form-control" name="status" value="<?=htmlspecialchars($resultado['status'])?>">
+                </div>
+            </div>
+            <div class="row justify-content-center" style="margin-bottom: 2%;">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary"style="width: 100%" name="editar">Editar livro</button>
+                    <button type="submit" class="btn btn-primary"style="width: 100%" name="editar">Editar Filme</button>
                 </div>
             </div>
         </form>
@@ -157,21 +157,25 @@
 <?php
 
     //Usa as funções do model para inserir no banco
-    if($novo_filme_editado->getfilme() != "" &&
-       $novo_filme_editado->getdescricao() != "" &&
-       $novo_filme_editado->getalugado() != "" &&
-       $novo_filme_editado->getquem_alugou() != "" &&
-       $novo_filme_editado->getano() != ""){
+    if($novo_filme_editado->getFilme() != "" &&
+       $novo_filme_editado->getAno() != "" &&
+       $novo_filme_editado->getGenero() != "" &&
+       $novo_filme_editado->getClassificacao() != "" &&
+       $novo_filme_editado->getDiretor() != "" &&
+       $novo_filme_editado->getSinopse() != "" &&
+       $novo_filme_editado->getStatus() != "" ){
 
         //Chama a função para inserir no banco
-        $nova_edicao = new Action_SQL;
+        $nova_edicao = new Action_SQL_filme;
         $nova_edicao->editar(
             $id_recebido,
-            $novo_filme_editado->getfilme(),
-            $novo_filme_editado->getdescricao(),
-            $novo_filme_editado->getalugado(),
-            $novo_filme_editado->getquem_alugou(),
-            $novo_filme_editado->getano());
+            $novo_filme_editado->getFilme(),
+            $novo_filme_editado->getAno(),
+            $novo_filme_editado->getGenero(),
+            $novo_filme_editado->getClassificacao(),
+            $novo_filme_editado->getDiretor(),
+            $novo_filme_editado->getSinopse(),
+            $novo_filme_editado->getStatus());
        }
 
 ?>

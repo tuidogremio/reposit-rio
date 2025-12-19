@@ -60,11 +60,13 @@
             $senha,
             $telefone){
 
+            $senhachego = $senha;
+
             require "../Conexao/conexao.php";
             $stmt = $pdo->prepare("INSERT INTO cadastro_usuario (nome, email, senha, telefone) VALUES (:nome, :email, :senha, :telefone)");
             $stmt->bindParam(":nome", $nome);
             $stmt->bindParam(":email", $email);
-            $stmt->bindParam(":senha", $senha);
+            $stmt->bindParam(":senha", $senhachego);
             $stmt->bindParam(":telefone", $telefone);
             $stmt->execute();
 
@@ -144,7 +146,7 @@
 
                 }else{
 
-                    echo "<script> alert('Sucesso ao deletar o livro');window.location.href='../View/home.php'; </script>";
+                    echo "<script> alert('Sucesso ao deletar o usuário');window.location.href='../View/home.php'; </script>";
 
                 }
 

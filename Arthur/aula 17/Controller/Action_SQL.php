@@ -15,7 +15,7 @@
 
             if(!$resultado){
 
-                echo "<script> alert('Erro ao procurar as informações');window.location.href='../index.php'; </script>";
+                echo "<script> alert('Erro ao procurar as informações');window.location.href='../envio_email.php'; </script>";
 
             }
 
@@ -39,13 +39,13 @@
 
                 if(!$resultado){
 
-                    echo "<script> alert('Erro ao selecionar');window.location.href='../index.php'; </script>";
+                    echo "<script> alert('Erro ao selecionar');window.location.href='envio_email.php'; </script>";
 
                 }
             
             }else{
 
-                echo "<script> alert('Não foi encontrado o id');window.location.href='../View/home.php'; </script>";
+                echo "<script> alert('Não foi encontrado o id');window.location.href='envio_email.php'; </script>";
 
             }
             
@@ -76,11 +76,11 @@
 
             if(!$resultado){
 
-                echo "<script> alert('Erro ao cadastrar o Email');window.location.href='../View/envio_email.php'; </script>";
+                echo "<script> alert('Erro ao cadastrar o Email');window.location.href='envio_email.php'; </script>";
 
             }else{
 
-                 echo "<script> alert('Sucesso ao cadastrar o Email');window.location.href='../View/home.php'; </script>";
+                 echo "<script> alert('Sucesso ao cadastrar o Email');window.location.href='envio_email.php'; </script>";
 
             }
             

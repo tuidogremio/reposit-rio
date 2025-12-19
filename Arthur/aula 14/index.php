@@ -8,7 +8,7 @@
     $verifica_login = $pdo->prepare("SELECT * FROM usuarios");
     $verifica_login->execute();
 
-    $resultado = $verifica_logar;
+    $resultado = $verifica_login;
 
     //Verifica se foi possivel selecionar
     if($resultado == FALSE){
@@ -37,7 +37,7 @@
         if($email == $comparar['email'] && $senha == $comparar['senha']){
 
                
-            $_SESSION['logado'] == TRUE;
+            $_SESSION['logado'] = TRUE;
             header("Location: View/home.php");
 
 
@@ -90,20 +90,6 @@
 
         </form>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <!-- JavaScript (Opcional) -->
     <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
